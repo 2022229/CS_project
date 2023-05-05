@@ -17,10 +17,13 @@ class Person{
     string name;
     int age;
     Person(){
+      static  int object_count=1;
+        cout<<object_count<<endl;
         cout<<"Ente age :";
         cin>>age;
         cout<<"Enter name :";
         cin>>name;
+        object_count++;
     }
 };
 class Student :public Person,public food_eaten{
@@ -40,19 +43,33 @@ class Student :public Person,public food_eaten{
         
        
     }
-
-};
-void show_record(){
-    int idn;
-    cin>>idn;
-    if (idn==reg_no){
-        cout<<"hello";
-    }
+    void show_record(){
+    
+    cout<<"name is :"<<name<<endl<<"age is :"<<age<<endl<<reg_no<<endl<<faculty<<endl;
+    cout<<"reg no is :"<<reg_no<<endl<<"faculty is :"<<faculty;
     
 }
+
+};
+
 int main(){
 // Person obj;
-Student abj;
-abj.AddMeal();
+int a;string b;int c;
+cout<<"no of student is :";
+cin>>a;
+cout<<"enter the data of all students :"<<endl;
+Student abj[a];
+cout<<"what you want to do :";
+cin>>b;
+if (b=="sh"){
+    cin>>c;
+    int i=0;
+    while(i<a){
+    if (c==abj[i].reg_no){
+        abj[i].show_record();
+    }
+i++;
+}}
+// abj.AddMeal();
     return 0;
 }
