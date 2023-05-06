@@ -1,20 +1,10 @@
-#include<iostream>
+#include <iostream>
+#include<string>
 using namespace std;
-class food_eaten{
-    public :
-    int meals=0;
-    int pr_per_meal=500;
-
-    void AddMeal(){
-    meals=meals+1;
-    int total_bill=meals*pr_per_meal;
-    cout<<total_bill;
-    }
-
-};
 class Person{
     public:
     string name;
+    string ms;
     int age;
     Person(){
       static  int object_count=1;
@@ -23,10 +13,25 @@ class Person{
         cin>>age;
         cout<<"Enter name :";
         cin>>name;
+        cout<<"enter mess statis :";
+        cin>>ms;
         object_count++;
     }
+    Person(string name,int age){
+        
+
+      name="abc";
+      age=0;
+    }
+    
+    void AddMeal(int & meals,int & pr_per_meal){
+    meals=meals+1;
+    int total_bill=meals*pr_per_meal;
+    cout<<total_bill;
+    
+    }
 };
-class Student :public Person,public food_eaten{
+class Student :public Person{
     public :
     int reg_no;
     string faculty;
@@ -45,7 +50,7 @@ class Student :public Person,public food_eaten{
     }
     void show_record(){
     
-    cout<<"name is :"<<name<<endl<<"age is :"<<age<<endl<<reg_no<<endl<<faculty<<endl;
+    cout<<"name is :"<<name<<endl<<"age is :"<<age<<endl;
     cout<<"reg no is :"<<reg_no<<endl<<"faculty is :"<<faculty;
     
 }
@@ -54,22 +59,48 @@ class Student :public Person,public food_eaten{
 
 int main(){
 // Person obj;
-int a;string b;int c;
+int a;int b;int c;
+int meals=0;
+int pr_per_meal=500;
 cout<<"no of student is :";
 cin>>a;
 cout<<"enter the data of all students :"<<endl;
 Student abj[a];
-cout<<"what you want to do :";
+while (true){
+cout<<"what you want to do : for info press 1 : for adding meal press 2 : for checking bill press 3: for out your mess press 4: for in your mess press 5 : for closing press :7"<<endl;
 cin>>b;
-if (b=="sh"){
+ int i=0;
+    switch (b){
+            case 1:
+    cout<<"enter your reg no :";
     cin>>c;
-    int i=0;
     while(i<a){
     if (c==abj[i].reg_no){
-        abj[i].show_record();
+        if(abj[i].ms=="in"){
+        abj[i].show_record();   
+    }
+    else{
+        cout<<"your mess is out :"<<endl;
+    }
     }
 i++;
-}}
-// abj.AddMeal();
-    return 0;
 }
+break;
+case 2:
+cout<<"enter your reg no :";
+cin>>c;
+    while(i<a){
+    if (c==abj[i].reg_no){
+         abj[i].AddMeal(meals,pr_per_meal);
+          }
+i++;
+}
+break;
+case 7:
+return 0;
+}
+
+// abj.AddMeal();
+    
+}
+ return 0;}
