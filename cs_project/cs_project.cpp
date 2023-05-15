@@ -1,252 +1,410 @@
 #include <iostream>
-#include<string>
+#include <string>
 using namespace std;
+
+/* Parent class */
 class Person
 {
-    public:
+public:
     string name;
-    string ms;
     int age;
+    string ms;
     int total_bill;
+
+    /* Class constructor */
     Person()
     {
-      static int object_count=1;
-        cout<<object_count<<endl;
-        cout<<"Enter age: ";
-        cin>>age;
-        cout<<"Enter name: ";
-        cin>>name;
-        cout<<"enter mess status:";
-        cin>>ms;
+        static int object_count = 1;
+        cout << object_count << endl;
+        cout << "Enter age: ";
+        cin >> age;
+        cout << "Enter name: ";
+        cin >> name;
         object_count++;
     }
-    Person(string name,int age)
-    {    
-      name="abc";
-      age=0;
-      cout<<"the data of the student no: ";
+
+    /* Add meal function */
+    void addMeal(int &meals, int &pr_per_meal)
+    {
+        meals = meals + 1;
+        total_bill = meals * pr_per_meal;
+        cout << total_bill << endl;
     }
-    void AddMeal(int & meals,int & pr_per_meal)
-  {
-      meals=meals+1;
-      total_bill=0;
-      total_bill=meals*pr_per_meal;
-      cout<<total_bill;
-  }
-  void Mess_bill() 
-  {
-    cout<<"Your mess bill is :"<<total_bill;
-  }
+
+    /* Mess bill function */
+    void Mess_bill()
+    {
+        cout << " mess bill is: " << total_bill << endl;
+    }
+
+    /* Mess bill in function */
     void Mess_in()
     {
-        ms="in";
+        ms = "in";
+        cout << "Your mess is in now.";
     }
+
+    /* Mess bill out function */
     void Mess_out()
     {
-        ms="out";
+        ms = "out";
+        cout << "Your mess is out now.";
     }
 };
-/*Child class */
-class Student :public Person
+
+/* Child class */
+class Student : public Person
 {
-    public :
+public:
     int reg_no;
     string faculty;
     string degree;
+
+    /* Constructor */
     Student()
     {
-        cout<<"Enter reg no: ";
-        cin>>reg_no;
-        cout<<"Enter faculty: ";
-        cin>>faculty;
-        if(faculty=="fcse")
+        cout << "Enter reg no: ";
+        cin >> reg_no;
+        cout << "Enter mess status: ";
+        cin >> ms;
+        cout << "Enter faculty: ";
+        cin >> faculty;
+        if (faculty == "fcse")
         {
-            cout<<"Enter program: ";
-            cin>>degree;
-        }       
+            cout << "Enter program: ";
+            cin >> degree;
+        }
     }
-    void show_record() 
-  {
-    
-    cout<<"name is: "<<name<<endl
-        <<"age is: "<<age<<endl
-        <<"reg no is: "<<reg_no<<endl
-        <<endl<<"faculty is: "<<faculty<<endl; 
-  }
+
+    /* Show record function */
+    void show_record()
+    {
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Reg No: " << reg_no << endl;
+        cout << "Faculty: " << faculty << endl;
+    }
 };
+
+/* Class Manager */
 class Manager
 {
-    public :
+public:
     string name;
     int salary;
     int id;
+
+    /* Constructor */
     Manager()
     {
-        cout<<"enter manager data : "<<endl;
-        cout<<"enter name: ";
-        cin>>name;
-        cout<<"enter salary: ";
-        cin>>salary;
-        cout<<"enter your id: ";
-        cin>>id;
+        cout << "Enter manager data" << endl;
+        cout << "Enter name: ";
+        cin >> name;
+        cout << "Enter salary: ";
+        cin >> salary;
+        cout << "Enter your ID: ";
+        cin >> id;
     }
+
+    /* Friend function */
+    friend class Student;
+    friend class Servant;
+};
+
+/* Second child class */
+class Servant
+{
+public:
+    string name;
+    int total_salary;
+    int idn;
+    int salary;
+
+    /* Constructor */
+    Servant()
+    {
+        cout << "Enter servant data" << endl;
+        cout << "Enter name: ";
+        cin >> name;
+        cout << "Enter ID: ";
+        cin >> idn;
+        total_salary = 0;
+        salary = 0;
+    }
+
+    /* Show function */
+    void show()
+    {
+        cout << "name is: " << name << endl;
+        cout << "salary: " << salary << endl;
+        cout << "ID: " << idn << endl;
+    }
+
+    void addSalary(int &sal_per_day)
+    {
+        salary += sal_per_day;
+        total_salary += salary;
+        cout << "Attendance marked and salary added." << endl;
+        cout << "Total salary: " << total_salary << endl;
+    }
+
+    /* Friend class */
     friend class Student;
 };
-class Servant :public Person
-{ public:
-string name;
-int age;
-int salary ;
 
-
-};
-class Guest: public Student ,public Servant
+/* Multiple Inheritance */
+class Guest : public Student, public Servant
 {
-    public:
+public:
     string name;
+
+    /* Constructor */
     Guest()
     {
-        cout<<"enter name :";
-        cin>>name;
+        cout << "Enter name: ";
+        cin >> name;
     }
 };
+
+/* Main function */
 int main()
 {
-int a,b,c,d,e,f,g,j;
-int meals=0;
-int pr_per_meal=500;
-cout<<"no of student is: ";
-cin>>a;
-cout<<"enter the data of all students : "<<endl;
-Student *abj;
-abj=new Student[a];
+    int no_of_students, no_of_servants;
+    int meals = 0;
+    int pr_per_meal = 500;
+    int sal_per_day = 1000;
+    int mgn_ser;
 
-Manager obj; 
-while (true){
-cout<<"enter 1 if you are student: ";
-cout<<"enter 2 if you are manager: ";
-cout<<"enter 3 if you are servant: ";
-cout<<"enter 4 for logging out: "; 
-cin>>d;
-if (d==1)
-{
-    cout<<"enter your reg no: ";
-    cin>>c;
-    bool student=true;
-    while (student)
+    cout << "Number of students: ";
+    cin >> no_of_students;
+
+    cout << "Enter the data of all students: " << endl;
+    Student *students = new Student[no_of_students];
+
+    Manager manager;
+
+    cout << "Enter the number of servants: ";
+    cin >> no_of_servants;
+
+    Servant *servants = new Servant[no_of_servants];
+
+    while (true)
     {
-      cout<<"what you want to do: "<<endl
-          <<"for info press-1: "
-          <<"for adding meal press-2: " 
-          <<"for checking bill press-3: "
-          <<"for in your mess press-4: "
-          <<"for out your mess press-5: "
-          <<"for closing press-6: ";
-      cin>>b;
-    int i=0;
-    while(i<a)
-    {
-       if (c==abj[i].reg_no)
-       {
-           switch (b)
-            {
-              case 1:    
-              abj[i].show_record();   
-              break;
-              case 2:
-              if(abj[i].ms=="in")
-              { 
-                 abj[i].AddMeal(meals,pr_per_meal);  
-              }
-              else
-              {
-                cout<<"your mess is out: "<<endl;
-              }
-              break;
-              case 3:
-              abj[i].Mess_bill();
-              break;
-              case 4:
-              abj[i].Mess_in();
-              break;
-              case 5:
-              abj[i].Mess_out();
-              break;
-              case 6:
-              student=false;
-              break;
-            }
-             i++;
-         }
-       if (b==6)
-       {
-         break;
-       }
-    }
-    }}
-    if (d == 2) 
-    {
-        cout << "enter your id no: ";
-        cin >> e;
-        if (e == obj.id)
+        int choice;
+        cout << "Enter 1 if you are a student" << endl;
+        cout << "Enter 2 if you are a manager" << endl;
+        cout << "Enter 3 if you are a servant" << endl;
+        cout << "Enter 4 to log out" << endl;
+        cin >> choice;
+
+        if (choice == 1)
         {
-          cout <<"enter 1 for students record: " 
-               <<"enter 2 for add student: "
-               <<"enter 3 for remove student: ";
-          cin >> f;
-          switch (f)
-          {
-             case 1:
-             cout << "enter reg no of the student: ";
-             cin >> g;
-             for (int i = 0; i <= a; i++)
-             {
-                if (g == abj[i].reg_no)
+            int reg_no;
+            cout << "Enter your reg no: ";
+            cin >> reg_no;
+
+            for (int i = 0; i < no_of_students; i++)
+            {
+                if (reg_no == students[i].reg_no)
                 {
-                  abj[i].show_record();
-                  break;
+                    while (true)
+                    {
+                        int student_choice;
+                        cout << "What do you want to do?" << endl;
+                        cout << "1. Info" << endl;
+                        cout << "2. Add Meal" << endl;
+                        cout << "3. Check Bill" << endl;
+                        cout << "4. In Your Mess" << endl;
+                        cout << "5. Out Your Mess" << endl;
+                        cout << "6. Close" << endl;
+                        cin >> student_choice;
+
+                        switch (student_choice)
+                        {
+                            case 1:
+                                students[i].show_record();
+                                break;
+                            case 2:
+                                if (students[i].ms == "in")
+                                {
+                                    students[i].addMeal(meals, pr_per_meal);
+                                }
+                                else
+                                {
+                                    cout << "Your mess is out" << endl;
+                                }
+                                break;
+                            case 3:
+                                students[i].Mess_bill();
+                                break;
+                            case 4:
+                                students[i].Mess_in();
+                                break;
+                            case 5:
+                                students[i].Mess_out();
+                                break;
+                            case 6:
+                                goto end_loop;
+                                break;
+                            default:
+                                cout << "Invalid choice. Please try again." << endl;
+                                break;
+                        }
+                    }
                 }
-             else
-             {
-                cout << "student not found !!! "<<endl;
-                break;
-             }
-             i++;
-      }
-           break;
-       case 2:
-     
-       case 3:
-          cout << "enter reg no of the student to be deleted: ";
-          cin >> g;
-          int index = -1;
-          for (int i = 0; i < a; i++)
-          {
-            if (g == abj[i].reg_no)
-            {
-              index = i;
-              break;
             }
-          }
-            if (index != -1)
+
+            cout << "Student not found!" << endl;
+        }
+        else if (choice == 2)
+        {
+            int id;
+            cout << "Enter your ID number: ";
+            cin >> id;
+
+            if (id == manager.id)
             {
-              for (int i = index; i < a-1; i++)
-              {
-                abj[i] = abj[i+1];
-              }
-             a--;
-            cout << "student with reg no " << g << " has been deleted." << endl;
-            } 
+                while (true)
+                {
+                    int manager_choice;
+                    cout << "1. Students Record" << endl;
+                    cout << "2. servant record " << endl;
+                    cout << "3. Remove Student" << endl;
+                    cout << "4. Close" << endl;
+                    cin >> manager_choice;
+
+                    switch (manager_choice)
+                    {
+                        case 1:
+                            {
+                                int reg_no;
+                                cout << "Enter the reg no of the student: ";
+                                cin >> reg_no;
+
+                                bool found = false;
+                                for (int i = 0; i < no_of_students; i++)
+                                {
+                                    if (reg_no == students[i].reg_no)
+                                    {                                        students[i].show_record();
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!found)
+                                {
+                                    cout << "Student not found!" << endl;
+                                }
+                            }
+                            break;
+                        case 2:
+                        cout<<"enter servant id"<<endl;
+                        cin>>mgn_ser;
+                        for (int i=0;i<no_of_servants;i++){
+                            if (servants[i].idn==mgn_ser){
+                                servants[i].show();
+                            }
+                        }
+                        
+                        case 3:
+                            {
+                                int reg_no;
+                                cout << "Enter the reg no of the student to remove: ";
+                                cin >> reg_no;
+
+                                bool found = false;
+                                for (int i = 0; i < no_of_students; i++)
+                                {
+                                    if (reg_no == students[i].reg_no)
+                                    {
+                                        for (int j = i; j < no_of_students - 1; j++)
+                                        {
+                                            students[j] = students[j + 1];
+                                        }
+
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                if (found)
+                                {
+                                    no_of_students--;
+                                    cout << "Student removed successfully!" << endl;
+                                }
+                                else
+                                {
+                                    cout << "Student not found!" << endl;
+                                }
+                            }
+                            break;
+                        case 4:
+                            goto end_loop;
+                            break;
+                        default:
+                            cout << "Invalid choice. Please try again." << endl;
+                            break;
+                    }
+                }
+            }
             else
             {
-            cout << "student with reg no " << g << " not found." << endl;
+                cout << "Manager not found!" << endl;
             }
+        }
+        else if (choice == 3)
+        {
+            int idn;
+            cout << "Enter your ID number: ";
+            cin >> idn;
+
+            for (int i = 0; i < no_of_servants; i++)
+            {
+                if (idn == servants[i].idn)
+                {
+                    while (true)
+                    {
+                        int servant_choice;
+                        cout << "What do you want to do?" << endl;
+                        cout << "1. Info" << endl;
+                        cout << "2. Add Salary" << endl;
+                        cout << "3. Close" << endl;
+                        cin >> servant_choice;
+
+                        switch (servant_choice)
+                        {
+                            case 1:
+                                servants[i].show();
+                                break;
+                            case 2:
+                                servants[i].addSalary(sal_per_day);
+                                break;
+                            case 3:
+                                goto end_loop;
+                                break;
+                            default:
+                                cout << "Invalid choice. Please try again." << endl;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            cout << "Servant not found!" << endl;
+        }
+        else if (choice == 4)
+        {
             break;
-       }
-    }}
-          if (d==4)
-          {
-           return 0;
-     }}
-           return 0;
-       }
+        }
+        else
+        {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    end_loop:
+    delete[] students;
+    delete[] servants;
+
+    return 0;
+}
