@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
+string ms;
 
 /* Parent class */
 class Person
@@ -20,14 +21,6 @@ public :
         cout << "Enter name: ";
         cin >> name;
         object_count++;
-    }
-
-    /* Add meal function */
-    void addMeal(int &meals, int &pr_per_meal)
-    {
-        meals = meals + 1;
-        total_bill = meals * pr_per_meal;
-        cout << total_bill << endl;
     }
 
     /* Mess bill function */
@@ -61,6 +54,15 @@ class Student : public Person
     }
       int reg_no;
       string ms;
+      
+      
+    /* Add meal function */
+    void addMeal(int &meals, int &pr_per_meal)
+    {
+        meals = meals + 1;
+        total_bill = meals * pr_per_meal;
+        cout << total_bill << endl;
+    }
     /* Show record function */
     void show_record()
     {
@@ -245,8 +247,7 @@ int main()
                                 students[i].Mess_out();
                                 break;
                             case 6:
-                                goto end_loop;
-                                break;
+                              break;
                             default:
                                 cout << "Invalid choice. Please try again." << endl;
                                 break;
@@ -352,8 +353,7 @@ int main()
                             }
                          }
                         case 5:
-                            goto end_loop;
-                            break;
+                             break;
                         default:
                             cout << "Invalid choice. Please try again." << endl;
                             break;
@@ -399,15 +399,16 @@ int main()
                             for (int i=0;i<no_of_students;i++){
                                 if (ser_reg==students[i].reg_no){
                                     if (ms=="in"){
-                                    students[i].AddMeal();
+                                    students[i].addMeal(meals,pr_per_meal);
                                 }
                                 else 
-                                {cout<<"mess is out "<<endl;}
+                                {cout<<"mess is out "<<endl;}}
+
                                 else 
-                                {cout<<"student not found "<<endl;}}
+                                {cout<<"student not found "<<endl;}
                             }
                             case 4:
-                                goto end_loop;
+                                
                                 break;
                             default:
                                 cout << "Invalid choice. Please try again." << endl;
