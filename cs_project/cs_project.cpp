@@ -5,11 +5,10 @@ using namespace std;
 /* Parent class */
 class Person
 {
-public:
+public :
     string name;
     int age;
-    string ms;
-    int total_bill;
+    int total_bill=0;
 
     /* Class constructor */
     Person()
@@ -36,6 +35,40 @@ public:
     {
         cout << " mess bill is: " << total_bill << endl;
     }
+};
+
+/* Child class */
+class Student : public Person
+{
+    private :
+    string faculty;
+    string degree;
+    public :
+    /* Constructor */
+    Student()
+    {
+        cout << "Enter reg no: ";
+        cin >> reg_no;
+        cout << "Enter mess status: ";
+        cin >> ms;
+        cout << "Enter faculty: ";
+        cin >> faculty;
+        if (faculty == "fcse")
+        {
+            cout << "Enter program: ";
+            cin >> degree;
+        }
+    }
+      int reg_no;
+      string ms;
+    /* Show record function */
+    void show_record()
+    {
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Reg No: " << reg_no << endl;
+        cout << "Faculty: " << faculty << endl;
+    }
 
     /* Mess bill in function */
     void Mess_in()
@@ -52,47 +85,14 @@ public:
     }
 };
 
-/* Child class */
-class Student : public Person
-{
-public:
-    int reg_no;
-    string faculty;
-    string degree;
-
-    /* Constructor */
-    Student()
-    {
-        cout << "Enter reg no: ";
-        cin >> reg_no;
-        cout << "Enter mess status: ";
-        cin >> ms;
-        cout << "Enter faculty: ";
-        cin >> faculty;
-        if (faculty == "fcse")
-        {
-            cout << "Enter program: ";
-            cin >> degree;
-        }
-    }
-
-    /* Show record function */
-    void show_record()
-    {
-        cout << "Name: " << name << endl;
-        cout << "Age: " << age << endl;
-        cout << "Reg No: " << reg_no << endl;
-        cout << "Faculty: " << faculty << endl;
-    }
-};
-
 /* Class Manager */
 class Manager
 {
-public:
+
+    private :
     string name;
     int salary;
-    int id;
+    public:
 
     /* Constructor */
     Manager()
@@ -105,7 +105,7 @@ public:
         cout << "Enter your ID: ";
         cin >> id;
     }
-
+    int id;
     /* Friend function */
     friend class Student;
     friend class Servant;
@@ -114,12 +114,11 @@ public:
 /* Second child class */
 class Servant
 {
-public:
+private :
     string name;
     int total_salary;
-    int idn;
     int salary;
-
+public:
     /* Constructor */
     Servant()
     {
@@ -131,7 +130,7 @@ public:
         total_salary = 0;
         salary = 0;
     }
-
+    int idn;
     /* Show function */
     void show()
     {
@@ -174,6 +173,8 @@ int main()
     int pr_per_meal = 500;
     int sal_per_day = 1000;
     int mgn_ser;
+    int mgn_std;
+    int ser_reg;
 
     cout << "Number of students: ";
     cin >> no_of_students;
@@ -270,7 +271,8 @@ int main()
                     cout << "1. Students Record" << endl;
                     cout << "2. servant record " << endl;
                     cout << "3. Remove Student" << endl;
-                    cout << "4. Close" << endl;
+                    cout << "4. student bills"<<endl;
+                    cout << "5. Close" << endl;
                     cin >> manager_choice;
 
                     switch (manager_choice)
@@ -285,7 +287,7 @@ int main()
                                 for (int i = 0; i < no_of_students; i++)
                                 {
                                     if (reg_no == students[i].reg_no)
-                                    {                                        students[i].show_record();
+                                    {    students[i].show_record();
                                         found = true;
                                         break;
                                     }
@@ -339,6 +341,17 @@ int main()
                             }
                             break;
                         case 4:
+                         cout<<"enter student reg no";
+                         cin>>mgn_std;
+                         for (int i=0;i<no_of_students;i++){
+                            if (mgn_std==students[i].reg_no){
+                                students[i].Mess_bill();
+                            }
+                            else {
+                                cout<<"student not found ";
+                            }
+                         }
+                        case 5:
                             goto end_loop;
                             break;
                         default:
@@ -368,7 +381,8 @@ int main()
                         cout << "What do you want to do?" << endl;
                         cout << "1. Info" << endl;
                         cout << "2. Add Salary" << endl;
-                        cout << "3. Close" << endl;
+                        cout << "3. Add meal to students" << endl;
+                        cout << "4. Close";
                         cin >> servant_choice;
 
                         switch (servant_choice)
@@ -380,6 +394,19 @@ int main()
                                 servants[i].addSalary(sal_per_day);
                                 break;
                             case 3:
+                            cout<<"enter reg no of student ";
+                            cin>>ser_reg;
+                            for (int i=0;i<no_of_students;i++){
+                                if (ser_reg==students[i].reg_no){
+                                    if (ms=="in"){
+                                    students[i].AddMeal();
+                                }
+                                else 
+                                {cout<<"mess is out "<<endl;}
+                                else 
+                                {cout<<"student not found "<<endl;}}
+                            }
+                            case 4:
                                 goto end_loop;
                                 break;
                             default:
@@ -402,9 +429,7 @@ int main()
         }
     }
 
-    end_loop:
-    delete[] students;
-    delete[] servants;
+    
 
     return 0;
 }
